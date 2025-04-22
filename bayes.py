@@ -25,8 +25,8 @@ def save_synthetic_data(df_100: pd.DataFrame, df_500: pd.DataFrame, df_1000: pd.
 
 
 
-def main():
-    bn = gum.randomBN(n=20, domain_size=4)
+def main(N=20, domain_size = 10, vert_to_edge_rati=2.0):
+    bn = gum.randomBN(n=N, domain_size=domain_size, ratio_arc=vert_to_edge_rati)
     generator_1000 = gum.BNDatabaseGenerator(bn)
     generator_500 = gum.BNDatabaseGenerator(bn)
     generator_100 = gum.BNDatabaseGenerator(bn)
