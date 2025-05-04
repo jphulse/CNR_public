@@ -1,5 +1,5 @@
 import pyagrum as gum
-import pyagrum.lib.notebook as gnb
+#import pyagrum.lib.notebook as gnb
 import pandas as pd
 import os
 import sys
@@ -9,7 +9,15 @@ import numpy as np
 
 
 # Saves synthetic data to csv folders
-def save_synthetic_data(df_100: pd.DataFrame, df_500: pd.DataFrame, df_1000: pd.DataFrame, adjacency_matrix: np.ndarray):
+def save_synthetic_data(df_100: pd.DataFrame, df_500: pd.DataFrame, df_1000: pd.DataFrame, adjacency_matrix: np.ndarray) ->None:
+    """Saves the synthetic dataframes to properly named files which are of the type year_month_day_hour_minute_secondN.csv
+
+    Args:
+        df_100 (pd.DataFrame): dataframe with 100 rows representative of the network
+        df_500 (pd.DataFrame): dataframe with 500 rows representative of the network
+        df_1000 (pd.DataFrame): dataframe with 1000 rows representative of the network
+        adjacency_matrix (np.ndarray): adjacency matrix representation of the network
+    """
     timestamp = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
     directory = os.path.join('data', 'synthetic', timestamp)
     os.makedirs(directory, exist_ok=True)
@@ -25,7 +33,14 @@ def save_synthetic_data(df_100: pd.DataFrame, df_500: pd.DataFrame, df_1000: pd.
 
 
 
-def main(N=20, domain_size = 10, vert_to_edge_rati=2.0):
+def main(N=20, domain_size = 10, vert_to_edge_rati=2.0) -> None:
+    """Main method generates synthetic bayes net with N variables, with the paramatized domain size and density, prints them out to files
+
+    Args:
+        N (int, optional): number of nodes in the graph. Defaults to 20.
+        domain_size (int, optional): size of the domain of each variable in the network. Defaults to 10.
+        vert_to_edge_rati (float, optional): number of edges to vertices. Defaults to 2.0.
+    """
     bn = gum.randomBN(n=N, domain_size=domain_size, ratio_arc=vert_to_edge_rati)
     generator_1000 = gum.BNDatabaseGenerator(bn)
     generator_500 = gum.BNDatabaseGenerator(bn)
